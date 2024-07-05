@@ -1,6 +1,7 @@
 package org.hibernate.demos.quarkus;
 
 import io.quarkus.narayana.jta.QuarkusTransaction;
+import io.quarkus.runtime.LaunchMode;
 import io.quarkus.runtime.StartupEvent;
 import io.quarkus.runtime.configuration.ProfileManager;
 import jakarta.enterprise.event.Observes;
@@ -57,7 +58,7 @@ public class DialoguesResource {
 
 	@Transactional(TxType.NEVER)
 	void reindexOnStart(@Observes StartupEvent event) throws InterruptedException {
-		if ( "dev".equals( ProfileManager.getActiveProfile() ) ) {
+		if (LaunchMode.DEVELOPMENT.equals(ProfileManager.getLaunchMode())) {
 			Long indexSize = QuarkusTransaction.requiringNew()
 					.call(searchSession.search(Dialogue.class)
 							.where(SearchPredicateFactory::matchAll)::fetchTotalHitCount);
