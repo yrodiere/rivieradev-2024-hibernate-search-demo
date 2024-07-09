@@ -6,9 +6,9 @@
 4. Create
 
 ```bash
-http http://localhost:8080/create?id=1&content=Hello%20Riviera%20Dev
+http://localhost:8080/create?id=1&content=Hello%20Riviera%20Dev
 
-http http://localhost:8080/search-full-text?term=Riviera
+http://localhost:8080/search-full-text?term=Riviera
 ```
 
 ## Code

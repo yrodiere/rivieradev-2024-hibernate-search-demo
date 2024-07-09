@@ -58,14 +58,12 @@ public class DialoguesResource {
 
 	@Transactional(TxType.NEVER)
 	void reindexOnStart(@Observes StartupEvent event) throws InterruptedException {
-		if (LaunchMode.DEVELOPMENT.equals(ProfileManager.getLaunchMode())) {
-			Long indexSize = QuarkusTransaction.requiringNew()
-					.call(searchSession.search(Dialogue.class)
-							.where(SearchPredicateFactory::matchAll)::fetchTotalHitCount);
+		Long indexSize = QuarkusTransaction.requiringNew()
+				.call(searchSession.search(Dialogue.class)
+						.where(SearchPredicateFactory::matchAll)::fetchTotalHitCount);
 
-			if (indexSize == null || indexSize == 0) {
-				reindex();
-			}
+		if (indexSize == null || indexSize == 0) {
+			reindex();
 		}
 	}
 }
